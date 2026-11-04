@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useSuspenseQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTRPC } from '@/trpc/client';
+import Link from 'next/link';
 
 export function ListaTarefas() {
   const trpc = useTRPC();
@@ -28,6 +29,7 @@ export function ListaTarefas() {
 
   return <div>
     {mensagem && <p>{mensagem}</p>}
+    <Link href="/tarefas/nova">Nova tarefa</Link>
     <ul>
       {tarefasQuery.data.map((tarefa) => (
         <li key={tarefa.id}>
