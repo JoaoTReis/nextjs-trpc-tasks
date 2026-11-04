@@ -49,3 +49,13 @@ export function deletarTarefa(id: string): void {
     tarefas.splice(index, 1);
 }
 
+export function buscarTarefa(id: string): Tarefa{
+    const tarefa = tarefas.find((l) => l.id === id);
+    if (!tarefa) {
+        throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Tarefa não encontrada",
+        });
+    }
+    return tarefa;
+}

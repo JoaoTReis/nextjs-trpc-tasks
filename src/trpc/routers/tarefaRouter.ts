@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { baseProcedure, createTRPCRouter } from '../init';
-import { criarTarefa, listarTarefas, atualizarTarefa, deletarTarefa} from '@/trpc/tarefa';
+import { criarTarefa, listarTarefas, atualizarTarefa, deletarTarefa, buscarTarefa} from '@/trpc/tarefa';
 
 export const tarefaRouter = createTRPCRouter({
   criar: baseProcedure.input(z.object({ titulo: z.string().trim().min(1, "O título é obrigatório"), descricao: z.string().optional()})).mutation(({ input }) => {
@@ -18,6 +18,10 @@ export const tarefaRouter = createTRPCRouter({
   deletar: baseProcedure.input(z.object({ id: z.string() })).mutation(({ input }) => {
     deletarTarefa(input.id);
     return { success: true };
+  }),
+
+  buscar: baseProcedure.input(z.object({ id: z.string() })).query(({ input }) => {
+    return buscarTarefa(input.id);
   }),
 
 });

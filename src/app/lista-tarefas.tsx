@@ -23,20 +23,23 @@ export function ListaTarefas() {
     }},
   ));
 
-  if (tarefasQuery.data.length === 0) {
-    return <p>Nenhuma Tarefa criada ainda!</p>
-  }
-
-  return <div>
-    {mensagem && <p>{mensagem}</p>}
+  return (
+  <div>
     <Link href="/tarefas/nova">Nova tarefa</Link>
-    <ul>
-      {tarefasQuery.data.map((tarefa) => (
-        <li key={tarefa.id}>
-          <strong>{tarefa.titulo}</strong> - {tarefa.descricao || 'Sem descrição'}
-          <button onClick={() => excluir.mutate({ id: tarefa.id })}>Excluir</button>
-        </li>
-      ))}
-    </ul>
-  </div>;
-}
+
+    {mensagem && <p>{mensagem}</p>}
+
+    {tarefasQuery.data.length === 0 ? (
+      <p>Nenhuma tarefa criada ainda!</p>
+    ) : (
+      <ul>
+        {tarefasQuery.data.map((tarefa) => (
+          <li key={tarefa.id}>
+            <strong>{tarefa.titulo}</strong> - {tarefa.descricao || 'Sem descrição'}
+            <button onClick={() => excluir.mutate({ id: tarefa.id })}>Excluir</button>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+)};
