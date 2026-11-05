@@ -8,7 +8,9 @@ export type Tarefa = {
     dataCriacao: string;
 };
 
-const tarefas: Tarefa[] = [];
+const global = globalThis as unknown as { tarefas?: Tarefa[] };
+
+export const tarefas: Tarefa[] = global.tarefas ?? (global.tarefas = []);
 
 export function criarTarefa(titulo: string, descricao?: string): Tarefa {
     const novo: Tarefa = {

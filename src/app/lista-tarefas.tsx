@@ -36,6 +36,7 @@ export function ListaTarefas() {
         {tarefasQuery.data.map((tarefa) => (
           <li key={tarefa.id}>
             <strong>{tarefa.titulo}</strong> - {tarefa.descricao || 'Sem descrição'}
+            <Link href={`/tarefas/${tarefa.id}`}>Editar</Link>
             <button onClick={() => excluir.mutate({ id: tarefa.id })}>Excluir</button>
           </li>
         ))}
