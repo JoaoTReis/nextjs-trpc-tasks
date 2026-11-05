@@ -8,6 +8,9 @@ export type Tarefa = {
     dataCriacao: string;
 };
 
+// Em desenvolvimento o hot reload recarrega os módulos, e em produção o Next pode
+// empacotar o servidor em partes separadas. Guardar o array no globalThis faz todas
+// as cópias do módulo compartilharem a mesma lista em memória.
 const store = globalThis as unknown as { tarefas?: Tarefa[] };
 
 const tarefas: Tarefa[] = store.tarefas ?? (store.tarefas = []);

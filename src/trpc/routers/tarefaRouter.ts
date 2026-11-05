@@ -26,5 +26,3 @@ export const tarefaRouter = createTRPCRouter({
 
 });
 
-// export type definition of API
-export type tarefaRouter = typeof tarefaRouter;

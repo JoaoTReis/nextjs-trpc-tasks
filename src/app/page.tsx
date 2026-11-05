@@ -10,8 +10,8 @@ export default async function Home() {
 
   return (
     <HydrateClient>
-      <ErrorBoundary fallback={<div>Something went wrong</div>}>
-        <Suspense fallback={<div>Loading...</div>}>
+      <ErrorBoundary fallback={<div>Algo deu errado ao carregar as tarefas</div>}>
+        <Suspense fallback={<div>Carregando...</div>}>
           <ListaTarefas />
         </Suspense>
       </ErrorBoundary>

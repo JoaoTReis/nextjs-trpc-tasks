@@ -14,7 +14,7 @@ import { appRouter } from './routers/_app';
 export const getQueryClient = cache(makeQueryClient);
 
 const createContext = async () =>
-  createTRPCContext({ headers: await headers() });
+  createTRPCContext(await headers() );
 
 export const trpc = createTRPCOptionsProxy({
   ctx: createContext,

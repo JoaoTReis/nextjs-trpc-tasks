@@ -5,7 +5,7 @@ import { initTRPC } from '@trpc/server';
  * the RSC server caller (where you pass `next/headers`) and the
  * API route handler (where you pass the request headers).
  */
-export const createTRPCContext = async (opts: { headers: Headers }) => {
+export const createTRPCContext = async (headers: Headers ) => {
   // const user = await auth(opts.headers);
   return { userId: 'user_123' };
 };
