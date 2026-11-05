@@ -18,7 +18,7 @@ export function ListaTarefas() {
       setMensagem('Tarefa excluída com sucesso!');
       queryClient.invalidateQueries(trpc.tarefa.listar.queryFilter());
     },
-    onError: (error: any) => {
+    onError: (error) => {
       setMensagem(`Erro ao excluir tarefa: ${error.message}`);
     }},
   ));

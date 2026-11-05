@@ -21,7 +21,7 @@ export function FormTarefa({ tarefa }: { tarefa?: Tarefa }) {
                 queryClient.invalidateQueries(trpc.tarefa.listar.queryFilter());
                 router.push('/');
             },
-            onError: (error: any) => {
+            onError: (error) => {
                 setMensagem(`Erro ao criar tarefa: ${error.message}`);
             },
         }),
