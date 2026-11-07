@@ -10,15 +10,19 @@ export function ListaTarefas() {
   const queryClient = useQueryClient();
   const [mensagem, setMensagem] = useState<string | null>(null);
 
+   // Os dados já vêm pré-carregados do servidor (prefetch + HydrateClient em page.tsx),
+  // então aqui não dispara uma requisição nova na primeira renderização.
   const tarefasQuery = useSuspenseQuery(trpc.tarefa.listar.queryOptions());
 
   const excluir = useMutation(
     trpc.tarefa.deletar.mutationOptions({
     onSuccess: () => {
       setMensagem('Tarefa excluída com sucesso!');
+      // Invalida a lista pra ela ser buscada de novo e a tarefa excluída sair da tela
       queryClient.invalidateQueries(trpc.tarefa.listar.queryFilter());
     },
     onError: (error) => {
+      // Mostra o erro que veio do backend (ex.: tarefa já não existe mais)
       setMensagem(`Erro ao excluir tarefa: ${error.message}`);
     }},
   ));

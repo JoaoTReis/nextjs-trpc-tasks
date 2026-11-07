@@ -6,6 +6,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTRPC } from '@/trpc/client';
 import type { Tarefa } from '@/trpc/tarefa';
 
+// Um formulário só pra criar e editar: se vier `tarefa`, é edição e os campos
+// já começam preenchidos; se não vier, é criação com os campos vazios.
 export function FormTarefa({ tarefa }: { tarefa?: Tarefa }) {
     const trpc = useTRPC();
     const router = useRouter();
@@ -18,6 +20,7 @@ export function FormTarefa({ tarefa }: { tarefa?: Tarefa }) {
     const criarTarefa = useMutation(
         trpc.tarefa.criar.mutationOptions({
             onSuccess: () => {
+                // Invalida a lista pra ela mostrar a tarefa nova ao voltar pra home
                 queryClient.invalidateQueries(trpc.tarefa.listar.queryFilter());
                 router.push('/');
             },
@@ -32,28 +35,28 @@ export function FormTarefa({ tarefa }: { tarefa?: Tarefa }) {
             onSuccess: () => {
                 queryClient.invalidateQueries(trpc.tarefa.listar.queryFilter());
                 if (tarefa) {
-                    router.push ('/');
+                    router.push('/');
                 }
             }
         }));
 
-    
 
-  function enviar() {
-            if (titulo.trim() === '') {
-                setMensagem('O título é obrigatório.');
-                return;
-            }
-            setMensagem(null);
 
-            if (tarefa) {
-                atualizarTarefa.mutate({ id: tarefa.id, titulo, descricao: descricao || undefined });
-            }else {
-                criarTarefa.mutate({ titulo, descricao });
-            }
+    function enviar() {
+        if (titulo.trim() === '') {
+            setMensagem('O título é obrigatório.');
+            return;
         }
-  
-  return (
+        setMensagem(null);
+
+        if (tarefa) {
+            atualizarTarefa.mutate({ id: tarefa.id, titulo, descricao: descricao || undefined });
+        } else {
+            criarTarefa.mutate({ titulo, descricao });
+        }
+    }
+
+    return (
         <div>
             <input
                 type="text"
@@ -69,6 +72,10 @@ export function FormTarefa({ tarefa }: { tarefa?: Tarefa }) {
             />
             <button onClick={enviar}>{tarefa ? 'Salvar alterações' : 'Criar Tarefa'}</button>
             {mensagem && <p>{mensagem}</p>}
+
+            <button type="button" onClick={() => router.push('/')}>
+                Cancelar
+            </button>
 
         </div>
     );
